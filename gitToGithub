@@ -1,0 +1,17 @@
+Remote a local folder to a github repository
+1. create local folder
+2. terminal to this folder
+3. > git init # initialize the folder as git folder
+4. > git remote add origin githubURL # remote the folder to a github repository
+
+origin is the name of the remote
+
+Add file from git to github
+
+1. terminal to the git folder
+2. > git add -A # add all edited file to be committed
+3. > git commnit -m 'message' # commit added file
+4. > git push origin HEAD:branchName # push to github repository with specific branch name
+
+
+
