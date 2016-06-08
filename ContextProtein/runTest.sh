@@ -18,7 +18,7 @@ for iter in 1; do
     1nodes=10 1patch_size=3 1patch_stride=1 1padding=2 1pooling_type=Avg 1pooling_size=3 1pooling_stride=2 \
     2nodes=10 2patch_size=3 2patch_stride=1 2padding=2 2pooling_type=Avg 2pooling_size=3 2pooling_stride=2 \
     3nodes=100 \
-    loss=Square mini_batch_size=50 momentum=0.5 reg_L2=1e-4 step_size=0.1 top_dropout=0 \
+    loss=Square mini_batch_size=100 momentum=0.5 reg_L2=1e-4 step_size=0.1 top_dropout=0 \
     num_iterations=300 step_size_scheduler=Few step_size_decay=0.1 step_size_decay_at=250 \
-    focus_layers=0-1-2-3_0-1-2-3-top > $logfile
+    focus_layers=0-1-2-3-0_0-1-2-3-top > $logfile
 done

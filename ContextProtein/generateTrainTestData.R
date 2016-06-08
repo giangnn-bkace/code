@@ -6,6 +6,8 @@ TEST_NEGATIVE <- 4
 POSITIVE <- 1
 NEGATIVE <- 0
 
+OVERSAMPLING_RATIO <- 5
+
 trainPath <- "/home/giang/Experiments/Context-Protein/Data/SCOP95/superfarm-farm/SCOP95_supfam_fam_1.train"
 testPath <- "/home/giang/Experiments/Context-Protein/Data/SCOP95/superfarm-farm/SCOP95_supfam_fam_1.test"
 
@@ -26,16 +28,18 @@ for (i in 1) {
 	nTestPositive <- sum(cast[,i]==TEST_POSITIVE)
 	nTestNegative <- sum(cast[,i]==TEST_NEGATIVE)
 	
-	train <- matrix('', nTrainPositive + nTrainNegative, 2)
+	train <- matrix('', nTrainPositive * 5 + nTrainNegative, 2)
 	test <- matrix ('', nTestPositive + nTestNegative, 2)
 	ctrain <- 0
 	ctest <- 0	
 
 	for (si in 1: nsam) {
 		if (cast[si,i] == TRAIN_POSITIVE) {
-			ctrain <- ctrain + 1
-			train[ctrain,1] <- data[si,1]
-			train[ctrain,2] <- POSITIVE
+			for (os in 1:OVERSAMPLING_RATIO) {			
+				ctrain <- ctrain + 1
+				train[ctrain,1] <- data[si,1]
+				train[ctrain,2] <- POSITIVE
+			}
 		} else if (cast[si,i] == TRAIN_NEGATIVE) {
 			ctrain <- ctrain + 1
 			train[ctrain,1] <- data[si,1]
