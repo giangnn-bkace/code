@@ -6,7 +6,7 @@ TEST_NEGATIVE <- 4
 POSITIVE <- 1
 NEGATIVE <- 0
 
-OVERSAMPLING_RATIO <- 5
+OVERSAMPLING_RATIO <- 50
 
 trainPath <- "/home/giang/Experiments/Context-Protein/Data/SCOP95/superfarm-farm/SCOP95_supfam_fam_1.train"
 testPath <- "/home/giang/Experiments/Context-Protein/Data/SCOP95/superfarm-farm/SCOP95_supfam_fam_1.test"
@@ -28,7 +28,7 @@ for (i in 1) {
 	nTestPositive <- sum(cast[,i]==TEST_POSITIVE)
 	nTestNegative <- sum(cast[,i]==TEST_NEGATIVE)
 	
-	train <- matrix('', nTrainPositive * 5 + nTrainNegative, 2)
+	train <- matrix('', nTrainPositive * OVERSAMPLING_RATIO + nTrainNegative, 3)
 	test <- matrix ('', nTestPositive + nTestNegative, 2)
 	ctrain <- 0
 	ctest <- 0	
@@ -37,13 +37,15 @@ for (i in 1) {
 		if (cast[si,i] == TRAIN_POSITIVE) {
 			for (os in 1:OVERSAMPLING_RATIO) {			
 				ctrain <- ctrain + 1
-				train[ctrain,1] <- data[si,1]
-				train[ctrain,2] <- POSITIVE
+				train[ctrain,1] <- ctrain
+				train[ctrain,2] <- data[si,1]
+				train[ctrain,3] <- POSITIVE
 			}
 		} else if (cast[si,i] == TRAIN_NEGATIVE) {
 			ctrain <- ctrain + 1
-			train[ctrain,1] <- data[si,1]
-			train[ctrain,2] <- NEGATIVE
+			train[ctrain,1] <- ctrain
+			train[ctrain,2] <- data[si,1]
+			train[ctrain,3] <- NEGATIVE
 		} else if (cast[si,i] == TEST_POSITIVE) {
 			ctest <- ctest + 1
 			test[ctest,1] <- data[si,1]
@@ -54,7 +56,14 @@ for (i in 1) {
 			test[ctest,2] <- NEGATIVE
 		}
 	}
+	
+	dtrain <- data.frame(train)
+	dtrain[,1] <- strtoi(dtrain[,1])
+	dtrain <- dtrain[sample(dtrain[,1]),]
+	
+	ptrain <- dtrain[,2:3]	
 		
-	write.table(train,trainPath,row.name=FALSE,col.names=FALSE,sep=',')
+	write.table(ptrain,trainPath,row.name=FALSE,col.names=FALSE,sep=',')
 	write.table(test,testPath,row.name=FALSE,col.names=FALSE,sep=',')		
 }
+
