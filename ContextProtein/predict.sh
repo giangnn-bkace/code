@@ -3,7 +3,7 @@
   gpu=-1  # <= change this to, e.g., "gpu=0" to use a specific GPU. 
   dataPath=/home/giang/Experiments/Context-Protein/Data/SCOP95/superfarm-farm
   dataName=SCOP95_supfam_fam
-  focus=lbl0-1-2-3-top.
+  focus=lbl0-1-2-3-4-5-6-top.
   ite=300
   pch_sz=9
 
